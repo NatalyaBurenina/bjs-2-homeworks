@@ -26,5 +26,13 @@ function solveEquation(a, b, c) {
 }
 
 function calculateTotalMortgage(percent, contribution, amount, countMonths) {
-  
+  let S = amount - contribution; // тело кредита, сумма - взнос  
+	let P = percent / 100 / 12; // 1/12 процентной ставки, преобразовали в месячный взнос
+	if ((percent < 0 || contribution < 0 || amount < 0 || countMonths < 0) ||
+		(isNaN(percent) || isNaN(contribution) || isNaN(amount) || isNaN(countMonths))) {
+		return false;
+	}
+	let monthAmount = S * (P + (P / (((1 + P) ** countMonths) - 1))); // платеж в месяц
+	let totalAmount = monthAmount * countMonths; //общая сумма платежа
+    return Number(totalAmount.toFixed(2));
 }
